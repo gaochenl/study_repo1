@@ -1,0 +1,56 @@
+<configuration>
+    <property name="maxHistory" value="10"/>
+    <jmxConfigurator/>
+    
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>D:/data/applogs/ia/base/config.log</file>
+        <!-- 配置日志所生成的目录以及生成文件名的规则 在logs/mylog-2018-06-31.0.log.zip -->        
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>D:/data/applogs/ia/base/config.log-%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+            <!-- 如果按天来回滚，则最大保存时间为5天，5天之前的都将被清理掉 -->
+            <maxHistory>5</maxHistory>
+            <!-- 日志总保存量为100MB -->
+            <totalSizeCap>100 MB</totalSizeCap>
+            <timeBasedFileNamingAndTriggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!--文件达到 最大128MB时会被压缩和切割 -->
+                <maxFileSize>12 MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+    
+    <!-- ERROR级别日志 -->  
+    <!-- 滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件 RollingFileAppender-->  
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+        <!-- 过滤器，只记录WARN级别的日志 -->  
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">  
+            <level>ERROR</level>  
+            <onMatch>ACCEPT</onMatch>  
+            <onMismatch>DENY</onMismatch>  
+        </filter>  
+        <file>D:/data/applogs/ia/base/error/config.error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>D:/data/applogs/ia/base/error/config.error.%d{yyyy-MM-dd}.zip</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n
+            </pattern>
+        </encoder>
+    </appender>  
+
+    <root level="info">
+        <appender-ref ref="console"/>
+        <appender-ref ref="file"/>
+        <appender-ref ref="ERROR"/>
+    </root>
+</configuration>

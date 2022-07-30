@@ -1,0 +1,2 @@
+ia:
+  monitor: url[jdbc:oracle:thin:@10.3.3.34:1521:orcl],driver[oracle.jdbc.driver.OracleDriver],user[ia],password[ia2_pwd0927]

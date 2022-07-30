@@ -1,0 +1,25 @@
+logging:
+    level:
+        com.ncamc.ia.config: DEBUG
+spring:
+    application:
+        name: config-server
+#    profiles:
+#        active: subversion
+#    cloud:
+#        config:
+#            server:
+#                svn:
+#                    uri: https://10.10.3.116/svn/DEVLOP/cloud-config
+#                    username: iaconfig
+#                    password: ia123456
+    profiles:
+        active: native
+    cloud:
+        config:
+            server:
+                native:
+                    search-locations: classpath:config/
+
+server:
+    port: 8750 #启动端口
